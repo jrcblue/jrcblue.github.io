@@ -1,0 +1,54 @@
+# jemdoc: menu{MENU}{research.html}, nofooter  
+== Research Experience
+
+~~~
+- Personal contributions are shown in information blocks
+~~~
+
+*Technical Strengths*
+- Computer Languages: Expert in Python. Proficient in MATLAB, database programming, and LaTeX. Competent with R and Unix shell scripts
+- Software & Tools: Competent with Hadoop, Spark, TensorFlow, Keras, and some optimization tools like GUROBI
+
+*Served as a graduate research assistant with [https://person.zju.edu.cn/en/xiqun Prof. Xiqun (Michael) Chen] (PI)*
+
+~~~
+{Network-Wide Traffic State Estimation and Prediction with DiDi's Massive Probe Vehicle Trajectory Data: A Deep Learning Approach, funded by Didi Chuxing}
+- Charged of writing project proposal, forged the independently-proposal-writing ability and skills
+- Designed a new deep learning framework for network-wide traffic state estimation and prediction, short and long term, via intrinsic traffic information(e.g., DiDi's massive vehicle trajectory data) and extrinsic variables (e.g., road topology information, and special events)
+- Proposed the methodology to estimate the ground truth of traffic states by sampling low-percentage connected vehicles' trajectory data through simulation tools
+~~~
+
+~~~
+{Demand/Supply Evolutionary Mechanism and Control Strategies Optimization for On-Demand Ride Services Based on Connected Mobile Big Data, funded by National Natural Science Foundation of China}
+- Customized a model to delineate the dynamic passenger-and-driver meeting process in on-demand ride service market; unlike historical equilibrium models, this model contributes to characterizing the influence of the short-term variances and disturbances of instant demand and supply
+- Proposed different goals of dynamic pricing, e.g., platform profit and social welfare; used approximate dynamic programming (ADP) algorithm to solve the multi-period decision problem
+- Transformed the ride-sourcing dispatching problem into a searching tree structure; adopted Monte-Carlo tree search (MCTS) to solve the problem, proving that MCTS embraces a better rapidity for near-optimal solutions searching, compared with the benchmark algorithms, i.e., greedy search, brute force search, branch and bound
+~~~
+
+~~~
+{Travel Demand Forecasting of On-Demand Ride Services Based on Deep Learning, funded by Ministry of Education of China}
+- Explored a short-term travel demand forecasting model (long short-term memory neural network) with real-world on-demand data of a large-scale urban network on the basis of scientific division of traffic analysis zone (TAZ)
+- Developed different short-term traffic speed prediction models that consider spatial and temporal parameters based on random forest (RF) and support vector regression (SVR); calibrated the models using one-year traffic data extracted from PeMS, obtained by web crawlers
+~~~
+
+~~~
+{Transportation Big Data Analysis, funded by Didi Chuxing}
+- Processed massive DiDi's order data and visualize the temporal and spatial distribution of data
+- Explored on-demand ridesplitting users' travel habits and individual transportation modal shift behavior, given the unavailability of ridesplitting services, based on online survey data
+- Quantitatively calculated ridesplitting's influence on vehicle use and purchase willingness, with reference to a case study in Hangzhou, China
+~~~
+
+~~~
+{Real-time Traffic Situation Identification via Internet Data Fusion, funded by Research Center of ITS Engineering and Technologies of Zhejiang}
+- Independently programmed web crawlers in python; collected one-year Hangzhou real-time traffic data from Baidu map open Application Programming Interface (API)
+- Processed both raw loop and camera data; analyzed the advantages of detector and internet traffic data; drew virtual trajectory lines using space-time velocity field to estimate travel time
+~~~
+
+*Served as a graduate research assistant with [http://cehyang.people.ust.hk Prof. Hai Yang] (PI)*
+
+~~~
+{Understanding Behavior of Drivers and Passengers in On-Demand Ride Service Markets, funded by Didi Chuxing}
+- Explored the application of deep learning in spatio-temporal demand prediction; indexed the hexagon calculation units into a sequence based on TAZ and adapted long short-term memory neural network to solve the incomptability between the hexagons in DiDi system and the convolutional neural network, a deep learning approach mostly used for image recognition
+- Proposed to introduce the area inflow and outflow of cars as features in the prediction model so as to improve the prediction accuracy by 3%
+- Analyzed the express and taxi service market in DiDi by using data-driven method; observed that regional demand increases parallelly with the positive linear correlation of the demand for express and taxi, and the decrease of regional demand synchronizes with insignificant correlation
+~~~
