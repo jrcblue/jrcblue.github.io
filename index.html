@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ruochen Jiao | Trustworthy Embodied AI & LLMs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ruochen Jiao">
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --border-subtle: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --radius-lg: 1.25rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+        -system-ui, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #e5f0ff 0, transparent 50%),
+                  var(--bg);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 1.5rem;
+      align-self: flex-start;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .profile { text-align: left; }
+
+    .avatar-wrapper {
+      width: 110px;
+      height: 110px;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 2px solid var(--accent-soft);
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .name {
+      font-size: 1.5rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .title {
+      margin: 0 0 0.4rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .meta {
+      margin: 0 0 0.35rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .zh {
+      font-family: "SF Pro", system-ui, -apple-system, "PingFang SC", sans-serif;
+    }
+
+    .contact-block {
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-block a {
+      font-size: 0.9rem;
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .contact-block a:hover { text-decoration: underline; }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .link-row a {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      text-decoration: none;
+      color: var(--text-main);
+      background: #f9fafb;
+    }
+
+    .link-row a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .nav-links {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      color: var(--text-muted);
+      background: #f3f4f6;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent-soft);
+      background: #eff6ff;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 1.9rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 0.9rem;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin-top: 1.1rem;
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    p {
+      margin-top: 0;
+      line-height: 1.6;
+      font-size: 0.96rem;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .nice-list {
+      padding-left: 1.1rem;
+      margin: 0.6rem 0 0;
+    }
+
+    .nice-list li { margin-bottom: 0.3rem; }
+
+    .compact-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .compact-list li {
+      margin-bottom: 0.5rem;
+      font-size: 0.94rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .timeline {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.5rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .timeline li {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: baseline;
+      font-size: 0.95rem;
+    }
+
+    .time-label {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .more-link {
+      margin-top: 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .pub {
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .pub:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .pub h3 {
+      margin-top: 0.3rem;
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+    }
+
+    .pub-authors {
+      margin: 0.1rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .pub-meta {
+      margin: 0.15rem 0 0.35rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .pub-meta span { margin-right: 0.2rem; }
+
+    .pub-desc {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding-top: 1.5rem;
+      }
+
+      .sidebar {
+        position: static;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.4rem 1.3rem;
+        border-radius: 1rem;
+      }
+
+      .timeline li {
+        grid-template-columns: 90px minmax(0, 1fr);
+      }
+
+      .avatar-wrapper {
+        width: 90px;
+        height: 90px;
+      }
+
+      .name { font-size: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="profile">
+        <div class="avatar-wrapper">
+          <!-- Replace with your actual photo path if different -->
+          <img src="pic/RJ_1.jpg" alt="Ruochen Jiao" class="avatar">
+        </div>
+        <h1 class="name">Ruochen Jiao</h1>
+        <p class="title">Applied Scientist<br>Store Foundational AI, Amazon</p>
+        <p class="meta">Ph.D., Computer Engineering<br>Northwestern University</p>
+        <p class="meta">My name in Chinese is <span class="zh">焦若辰</span></p>
+
+        <div class="contact-block">
+          <a href="mailto:ruochen.jiao@u.northwestern.edu">ruochen.jiao@u.northwestern.edu</a>
+        </div>
+
+        <div class="link-row">
+          <a href="https://scholar.google.com/citations?user=czdJjekAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a>
+          <a href="https://www.linkedin.com/in/ruochen-jiao-781512161/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#news">News</a>
+        <a href="#publications">Publications</a>
+        <a href="#experience">Experience</a>
+        <a href="#service">Service</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section id="about" class="card">
+        <h2>About</h2>
+        <p>
+          I am an applied scientist at Amazon working on <strong>foundational AI models</strong>.
+          I received my Ph.D. in Computer Engineering from
+          <a href="https://www.northwestern.edu" target="_blank" rel="noopener">Northwestern University</a>,
+          where I was advised by
+          <a href="https://www.mccormick.northwestern.edu/electrical-computer/faculty/profiles/zhu-qi.html" target="_blank" rel="noopener">Prof. Qi Zhu</a>.
+          I obtained my B.S. in Electrical Engineering from
+          <a href="https://www.zju.edu.cn" target="_blank" rel="noopener">Zhejiang University</a> in 2019.
+        </p>
+        <p>
+          My long-term goal is to build <strong>trustworthy AI agents</strong>, with an emphasis on:
+        </p>
+        <ul class="nice-list">
+          <li><strong>Continual optimization of LLMs</strong> across pre-training and post-training stages for interactive and trustworthy decision-making</li>
+          <li><strong>Robust and explainable machine learning</strong> for safety-critical systems</li>
+        </ul>
+
+        <div class="two-col">
+          <div>
+            <h3>Education</h3>
+            <ul class="compact-list">
+              <li><strong>Northwestern University</strong> – Ph.D. Computer Engineering, 2019–2024</li>
+              <li><strong>Zhejiang University</strong> – B.S. Electrical Engineering, 2015–2019</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="research" class="card">
+        <h2>Research overview</h2>
+        <p>
+          My work sits at the intersection of <strong>machine learning, autonomy, and safety</strong>,
+        focusing on building reliable decision-making systems in interactive environments.
+        Recently, I have been working on
+        <strong>knowledge distillation and reinforcement learning</strong>
+        to develop state-of-the-art LLMs and agents for real-world applications at scale.
+          <!--  I study both the <em>capabilities</em> and the <em>failure modes</em> of learning-enabled systems,
+          with current projects spanning: -->
+         
+        </p>
+
+        <!--  
+        <ul class="nice-list">
+          <li>
+            <strong>Trustworthy embodied agents:</strong>
+            backdoor and robustness analysis of LLM-based agents in simulated environments.
+          </li>
+          <li>
+            <strong>Safe decision-making with LLMs:</strong>
+            leveraging LLMs for planning and control in autonomous driving while preserving safety guarantees.
+          </li>
+          <li>
+            <strong>Trajectory prediction and generation:</strong>
+            kinematics-aware generative models and adversarially robust predictors for interactive traffic scenarios.
+          </li>
+          <li>
+            <strong>Safety-driven reinforcement learning:</strong>
+            integrating control-theoretic constraints (e.g., barriers) into RL for unknown stochastic environments.
+          </li>
+        </ul>
+         -->
+      </section>
+
+      <section id="news" class="card">
+        <h2>News</h2>
+        <ul class="timeline">
+          <li>
+            <span class="time-label">Jan 2025</span>
+            <div>
+              Our paper
+              <em>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems</em>
+              was accepted to <strong>ICLR 2025</strong>.
+            </div>
+          </li>
+          <li>
+            <span class="time-label">Jun 2024</span>
+            <div>
+              <em>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling</em>
+              was accepted to <strong>IROS 2024</strong>.
+            </div>
+          </li>
+          <li>
+            <span class="time-label">Mar 2024</span>
+            <div>
+              <em>Empowering Autonomous Driving with Large Language Models: A Safety Perspective</em>
+              was accepted to <strong>LLMAgents @ ICLR 2024</strong>.
+            </div>
+          </li>
+          <li>
+            <span class="time-label">Aug 2023</span>
+            <div>
+              The co-authored book chapter
+              <em>Safety-Assured Design and Adaptation of Connected and Autonomous Vehicles</em> is now available online.
+            </div>
+          </li>
+        </ul>
+        <p class="more-link">
+          <a href="activities.html">Full news &amp; activities →</a>
+        </p>
+      </section>
+
+      <section id="publications" class="card">
+        <h2>Selected publications</h2>
+
+        <article class="pub">
+          <h3>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems.</h3>
+          <p class="pub-authors">
+            <strong>Ruochen Jiao*</strong>, Shaoyuan Xie*, Justin Yue, Takami Sato, Lixu Wang, Yixuan Wang,
+            Qi Alfred Chen, Qi Zhu
+          </p>
+          <p class="pub-meta">
+            <span>ICLR 2025</span>
+            <span>·</span>
+            <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a>
+          </p>
+          <p class="pub-desc">
+            Demonstrates that LLM-based embodied agents can be vulnerable to backdoor attacks and provides
+            evaluation and defenses toward safer LLM-driven decision-making.
+          </p>
+        </article>
+
+        <article class="pub">
+          <h3>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling.</h3>
+          <p class="pub-authors">
+            <strong>Ruochen Jiao*</strong>, Yixuan Wang*, Xiangguo Liu, Simon Zhan, Chao Huang, Qi Zhu
+          </p>
+          <p class="pub-meta">
+            <span>IROS 2024</span>
+            <span>·</span>
+            <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a>
+          </p>
+          <p class="pub-desc">
+            Introduces a kinematics-aware latent SDE model that generates physically consistent and diverse
+            future trajectories for autonomous driving.
+          </p>
+        </article>
+
+        <article class="pub">
+          <h3>Semi-supervised Semantics-guided Adversarial Training for Robust Trajectory Prediction.</h3>
+          <p class="pub-authors">
+            <strong>Ruochen Jiao</strong>, Xiangguo Liu, Takami Sato, Alfred Chen, Qi Zhu
+          </p>
+          <p class="pub-meta">
+            <span>ICCV 2023</span>
+            <span>·</span>
+            <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a>
+          </p>
+          <p class="pub-desc">
+            Uses semantics-guided adversarial training to improve trajectory prediction robustness under noisy
+            and adversarial agent behaviors.
+          </p>
+        </article>
+
+        <article class="pub">
+          <h3>Enforcing Hard Constraints with Soft Barriers: Safety-driven Reinforcement Learning in Unknown Stochastic Environments.</h3>
+          <p class="pub-authors">
+            Yixuan Wang, Sinong Simon Zhan, <strong>Ruochen Jiao</strong>, Zhilu Wang, Wanxin Jin,
+            Zhuoran Yang, Zhaoran Wang, Chao Huang, Qi Zhu
+          </p>
+          <p class="pub-meta">
+            <span>ICML 2023</span>
+            <span>·</span>
+            <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a>
+          </p>
+          <p class="pub-desc">
+            Bridges safe control and RL by enforcing hard safety constraints through soft barrier functions
+            under stochastic dynamics.
+          </p>
+        </article>
+
+        <p class="more-link">
+          <a href="publications.html">Full publication list →</a>
+        </p>
+      </section>
+
+      <section id="experience" class="card">
+        <h2>Experience</h2>
+        <ul class="compact-list">
+          <li>
+            <strong>Applied Scientist</strong>, Amazon, Seattle, WA<br>
+            Store Foundational AI · 2024–present
+          </li>
+          <li>
+            <strong>Applied Scientist Intern</strong>, Amazon, Seattle, WA<br>
+            Jun. 2023 – Sep. 2023 
+          </li>
+          <li>
+            <strong>Research Scientist Intern</strong>, Toyota InfoTech Labs, Mountain View, CA<br>
+            Jun. 2021 – Sep. 2021 
+          </li>
+          <li>
+            <strong>Big Data Engineer</strong>, Intel, Shanghai, China<br>
+            Mar. 2019 – Jun. 2019
+          </li>
+        </ul>
+      </section>
+
+      <section id="service" class="card">
+        <h2>Service</h2>
+        <div class="two-col">
+          <div>
+            <h3>Conference reviewer</h3>
+            <p> NeurIPS, ICLR, ICML, ECCV, ICCV, CVPR, IROS, ICRA, AAAI, AISTATS, IV</p>
+          </div>
+          <div>
+            <h3>Journal reviewer</h3>
+            <p>YMLR, RA-L, TMM, TNNLS, TCAD, TCPS, TIV, IEEE JSAC</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© <span id="year"></span> Ruochen Jiao · Hosted on GitHub Pages</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
