@@ -1,0 +1,155 @@
+<!-- =========================
+     File 2: activities.html
+     ========================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News & Activities | Ruochen Jiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="News and activities of Ruochen Jiao">
+  <style>
+    /* Same minimal shared styling (keep identical to publications.html for consistent look) */
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --border-subtle: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --radius-lg: 1.25rem;
+      --maxw: 980px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+        -system-ui, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #e5f0ff 0, transparent 50%), var(--bg);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .top h1 { margin: 0; font-size: 1.25rem; letter-spacing: -0.2px; }
+    .top .nav {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 1.9rem;
+      box-shadow: var(--shadow-soft);
+    }
+    .card h2 { margin: 0 0 0.9rem; font-size: 1.15rem; }
+
+    /* Timeline (compatible with your homepage style) */
+    .timeline {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.5rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .timeline li {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: baseline;
+      font-size: 0.95rem;
+    }
+    .time-label { font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
+
+    .section-note { margin: 0 0 1rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .timeline li { grid-template-columns: 90px minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h1>News & Activities</h1>
+      <div class="nav">
+        <a href="index.html">← Home</a>
+        <a href="publications.html">Publications →</a>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>All updates</h2>
+      <p class="section-note">
+        A reverse-chronological list of news and activities. Keep this page comprehensive; keep the homepage short.
+      </p>
+
+      <ul class="timeline">
+        <li>
+          <span class="time-label">Jan 2025</span>
+          <div>
+            Our paper <em>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems</em>
+            was accepted to <strong>ICLR 2025</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Jun 2024</span>
+          <div>
+            <em>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling</em>
+            was accepted to <strong>IROS 2024</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Mar 2024</span>
+          <div>
+            <em>Empowering Autonomous Driving with Large Language Models: A Safety Perspective</em>
+            was accepted to <strong>LLMAgents @ ICLR 2024</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Aug 2023</span>
+          <div>
+            The co-authored book chapter <em>Safety-Assured Design and Adaptation of Connected and Autonomous Vehicles</em>
+            is now available online.
+          </div>
+        </li>
+
+        <!-- Add older items here -->
+
+      </ul>
+    </section>
+
+    <div class="footer">© <span id="yearA"></span> Ruochen Jiao</div>
+  </div>
+
+  <script>
+    document.getElementById('yearA').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
