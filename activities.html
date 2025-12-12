@@ -1,20 +1,18 @@
 <!-- =========================
-     File 2: activities.html
+     File 1: activities.html
      ========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>News & Activities | Ruochen Jiao</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="News and activities of Ruochen Jiao">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="News and activities of Ruochen Jiao" />
   <style>
-    /* Same minimal shared styling (keep identical to publications.html for consistent look) */
     :root {
       --bg: #f3f4f6;
       --card-bg: #ffffff;
       --accent: #2563eb;
-      --accent-soft: rgba(37, 99, 235, 0.08);
       --border-subtle: #e5e7eb;
       --text-main: #111827;
       --text-muted: #6b7280;
@@ -45,7 +43,11 @@
       gap: 1rem;
       margin-bottom: 1rem;
     }
-    .top h1 { margin: 0; font-size: 1.25rem; letter-spacing: -0.2px; }
+    .top h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      letter-spacing: -0.2px;
+    }
     .top .nav {
       font-size: 0.92rem;
       color: var(--text-muted);
@@ -60,9 +62,11 @@
       padding: 1.8rem 1.9rem;
       box-shadow: var(--shadow-soft);
     }
-    .card h2 { margin: 0 0 0.9rem; font-size: 1.15rem; }
+    .card h2 {
+      margin: 0 0 0.9rem;
+      font-size: 1.15rem;
+    }
 
-    /* Timeline (compatible with your homepage style) */
     .timeline {
       list-style: none;
       padding-left: 0;
@@ -78,9 +82,12 @@
       align-items: baseline;
       font-size: 0.95rem;
     }
-    .time-label { font-weight: 600; color: var(--text-muted); font-size: 0.9rem; }
-
-    .section-note { margin: 0 0 1rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+    .time-label {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
 
     .footer {
       text-align: center;
@@ -106,42 +113,132 @@
 
     <section class="card">
       <h2>All updates</h2>
-      <p class="section-note">
-        A reverse-chronological list of news and activities. Keep this page comprehensive; keep the homepage short.
-      </p>
-
       <ul class="timeline">
         <li>
           <span class="time-label">Jan 2025</span>
           <div>
-            Our paper <em>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems</em>
+            Our paper
+            <a href="https://arxiv.org/pdf/2405.20774" target="_blank" rel="noopener">
+              <em>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems</em>
+            </a>
             was accepted to <strong>ICLR 2025</strong>.
           </div>
         </li>
         <li>
           <span class="time-label">Jun 2024</span>
           <div>
-            <em>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling</em>
+            Our paper
+            <a href="https://arxiv.org/pdf/2309.09317" target="_blank" rel="noopener">
+              <em>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling</em>
+            </a>
             was accepted to <strong>IROS 2024</strong>.
           </div>
         </li>
         <li>
           <span class="time-label">Mar 2024</span>
           <div>
-            <em>Empowering Autonomous Driving with Large Language Models: A Safety Perspective</em>
+            Our paper
+            <a href="https://arxiv.org/pdf/2312.00812.pdf" target="_blank" rel="noopener">
+              <em>Empowering Autonomous Driving with Large Language Models: A Safety Perspective</em>
+            </a>
             was accepted to <strong>LLMAgents @ ICLR 2024</strong>.
           </div>
         </li>
         <li>
           <span class="time-label">Aug 2023</span>
           <div>
-            The co-authored book chapter <em>Safety-Assured Design and Adaptation of Connected and Autonomous Vehicles</em>
+            The co-authored book chapter <em>"Safety-Assured Design and Adaptation of Connected and Autonomous Vehicles"</em>
             is now available online.
           </div>
         </li>
-
-        <!-- Add older items here -->
-
+        <li>
+          <span class="time-label">Jul 2023</span>
+          <div>
+            Our paper
+            <a href="https://arxiv.org/pdf/2205.14230.pdf" target="_blank" rel="noopener">
+              <em>Semi-supervised Semantics-guided Adversarial Training for Robust Trajectory Prediction</em>
+            </a>
+            was accepted to <strong>ICCV 2023</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Jun 2023</span>
+          <div>
+            Our two papers were accepted to <strong>IROS 2023</strong>:
+            <a href="https://arxiv.org/pdf/2303.05000.pdf" target="_blank" rel="noopener"><em>Learning Representation for Anomaly Detection of Vehicle Trajectories</em></a>
+            and
+            <a href="https://arxiv.org/pdf/2307.11876" target="_blank" rel="noopener"><em>Safety-Assured Speculative Planning with Adaptive Prediction</em></a>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Jun 2023</span>
+          <div>
+            I joined Amazon as an <strong>Applied Scientist Intern</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Apr 2023</span>
+          <div>
+            Our paper
+            <a href="https://arxiv.org/pdf/2209.15090.pdf" target="_blank" rel="noopener">
+              <em>Enforcing Hard Constraints with Soft Barriers: Safety-driven Reinforcement Learning in Unknown Stochastic Environments</em>
+            </a>
+            was accepted to <strong>ICML 2023</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Feb 2023</span>
+          <div>
+            Our paper <em>Efficient Stuttering Event Detection Using Siamese Networks</em>
+            was accepted to <strong>ICASSP 2023</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Jun 2022</span>
+          <div>
+            Our paper
+            <a href="https://arxiv.org/pdf/2203.01261.pdf" target="_blank" rel="noopener">
+              <em>TAE: A Semi-supervised Controllable Behavior-aware Trajectory Generator and Predictor</em>
+            </a>
+            was accepted to <strong>IROS 2022</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Feb 2022</span>
+          <div>
+            Our paper
+            <a href="https://dl.acm.org/doi/pdf/10.1145/3566097.3567847" target="_blank" rel="noopener">
+              <em>Safety-driven Interactive Planning for Neural Network-based Lane Changing</em>
+            </a>
+            was accepted to <strong>ASP-DAC 2023</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Jun 2021</span>
+          <div>
+            I joined InfoTech Labs Toyota as a <strong>Research Scientist Intern</strong> and worked on mobile vehicular cloud.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">May 2021</span>
+          <div>
+            Our paper
+            <a href="https://arxiv.org/pdf/2103.00345.pdf" target="_blank" rel="noopener">
+              <em>End-to-end Uncertainty-based Mitigation of Adversarial Attacks to Automated Lane Centering</em>
+            </a>
+            was accepted to <strong>IEEE Intelligent Vehicles Symposium (IV 2021)</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="time-label">Feb 2021</span>
+          <div>
+            Our paper
+            <a href="https://par.nsf.gov/servlets/purl/10289738" target="_blank" rel="noopener">
+              <em>WIP: End-to-end analysis of adversarial attacks to automated lane centering systems</em>
+            </a>
+            was accepted to the <strong>AutoSec 2021</strong> workshop and received the <strong>Best Short Paper Award</strong>.
+          </div>
+        </li>
       </ul>
     </section>
 
@@ -153,3 +250,5 @@
   </script>
 </body>
 </html>
+
+
