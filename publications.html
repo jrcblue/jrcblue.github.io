@@ -1,20 +1,18 @@
 <!-- =========================
-     File 1: publications.html
+     File 2: publications.html
      ========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Publications | Ruochen Jiao</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Publications of Ruochen Jiao">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Publications of Ruochen Jiao" />
   <style>
-    /* Minimal shared styling (matches your index.html look) */
     :root {
       --bg: #f3f4f6;
       --card-bg: #ffffff;
       --accent: #2563eb;
-      --accent-soft: rgba(37, 99, 235, 0.08);
       --border-subtle: #e5e7eb;
       --text-main: #111827;
       --text-muted: #6b7280;
@@ -69,22 +67,18 @@
       font-size: 1.15rem;
     }
 
-    /* Publication items (reuse your homepage pub styles) */
-    .pub { padding: 0.75rem 0; border-top: 1px solid var(--border-subtle); }
-    .pub:first-of-type { border-top: none; padding-top: 0; }
-    .pub h3 { margin: 0.3rem 0 0.3rem; font-size: 1rem; }
-    .pub-authors { margin: 0.1rem 0; font-size: 0.9rem; color: var(--text-muted); }
-    .pub-meta { margin: 0.15rem 0 0.35rem; font-size: 0.85rem; color: var(--text-muted); }
-    .pub-desc { margin: 0; font-size: 0.9rem; line-height: 1.6; }
-
-    .section-note { margin: 0 0 1rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
-
-    /* Optional year grouping */
     .year {
       margin: 1.6rem 0 0.6rem;
       font-size: 1rem;
       color: var(--text-main);
+      font-weight: 700;
     }
+
+    .pub { padding: 0.75rem 0; border-top: 1px solid var(--border-subtle); }
+    .pub:first-of-type { border-top: none; padding-top: 0; }
+    .pub h3 { margin: 0.2rem 0 0.35rem; font-size: 1rem; }
+    .pub-authors { margin: 0.1rem 0; font-size: 0.9rem; color: var(--text-muted); }
+    .pub-meta { margin: 0.15rem 0 0; font-size: 0.85rem; color: var(--text-muted); }
 
     .footer {
       text-align: center;
@@ -106,57 +100,95 @@
 
     <section class="card">
       <h2>Full publication list</h2>
-      <p class="section-note">
-        Below is my full publication list (reverse chronological). Replace the placeholder links with your paper/code/project pages.
-      </p>
 
       <div class="year">2025</div>
       <article class="pub">
         <h3>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems.</h3>
         <p class="pub-authors"><strong>Ruochen Jiao*</strong>, Shaoyuan Xie*, Justin Yue, Takami Sato, Lixu Wang, Yixuan Wang, Qi Alfred Chen, Qi Zhu</p>
-        <p class="pub-meta"><span>ICLR 2025</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a> · <a href="#" onclick="return false;">code</a></p>
-        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+        <p class="pub-meta"><em>ICLR 2025</em> · <a href="https://arxiv.org/pdf/2405.20774" target="_blank" rel="noopener">paper</a></p>
       </article>
 
       <div class="year">2024</div>
       <article class="pub">
         <h3>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling.</h3>
         <p class="pub-authors"><strong>Ruochen Jiao*</strong>, Yixuan Wang*, Xiangguo Liu, Simon Zhan, Chao Huang, Qi Zhu</p>
-        <p class="pub-meta"><span>IROS 2024</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a></p>
-        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+        <p class="pub-meta"><em>IROS 2024</em> · <a href="https://arxiv.org/pdf/2309.09317.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
+      <article class="pub">
+        <h3>State-wise Safe Reinforcement Learning With Pixel Observations.</h3>
+        <p class="pub-authors">Sinong Simon Zhan, Yixuan Wang, Qingyuan Wu, <strong>Ruochen Jiao</strong>, Chao Huang, Qi Zhu</p>
+        <p class="pub-meta"><em>L4DC 2024</em> · <a href="https://arxiv.org/pdf/2311.02227.pdf" target="_blank" rel="noopener">paper</a></p>
       </article>
       <article class="pub">
         <h3>Empowering Autonomous Driving with Large Language Models: A Safety Perspective.</h3>
-        <p class="pub-authors"><strong>Ruochen Jiao</strong>, …</p>
-        <p class="pub-meta"><span>LLMAgents @ ICLR 2024</span> · <a href="#" onclick="return false;">paper</a></p>
-        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+        <p class="pub-authors">Yixuan Wang*, <strong>Ruochen Jiao*</strong>, Chengtian Lang, Sinong Simon Zhan, Chao Huang, Zhaoran Wang, Zhuoran Yang, Qi Zhu</p>
+        <p class="pub-meta"><em>LLMAgents @ ICLR 2024</em> · <a href="https://arxiv.org/pdf/2312.00812.pdf" target="_blank" rel="noopener">paper</a></p>
       </article>
 
       <div class="year">2023</div>
       <article class="pub">
         <h3>Semi-supervised Semantics-guided Adversarial Training for Robust Trajectory Prediction.</h3>
         <p class="pub-authors"><strong>Ruochen Jiao</strong>, Xiangguo Liu, Takami Sato, Alfred Chen, Qi Zhu</p>
-        <p class="pub-meta"><span>ICCV 2023</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a></p>
-        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+        <p class="pub-meta"><em>ICCV 2023</em> · <a href="https://arxiv.org/pdf/2205.14230.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
+      <article class="pub">
+        <h3>Learning Representation for Anomaly Detection of Vehicle Trajectories.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao</strong>, Juyang Bai, Xiangguo Liu, Takami Sato, Xiaowei Yuan, Alfred Chen, Qi Zhu</p>
+        <p class="pub-meta"><em>IROS 2023</em> · <a href="https://arxiv.org/pdf/2303.05000.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
+      <article class="pub">
+        <h3>Safety-Assured Speculative Planning with Adaptive Prediction.</h3>
+        <p class="pub-authors">Xiangguo Liu, <strong>Ruochen Jiao</strong>, Yixuan Wang, Yimin Han, Bowen Zheng, Qi Zhu</p>
+        <p class="pub-meta"><em>IROS 2023</em> · <a href="https://arxiv.org/pdf/2307.11876" target="_blank" rel="noopener">paper</a></p>
       </article>
       <article class="pub">
         <h3>Enforcing Hard Constraints with Soft Barriers: Safety-driven Reinforcement Learning in Unknown Stochastic Environments.</h3>
         <p class="pub-authors">Yixuan Wang, Sinong Simon Zhan, <strong>Ruochen Jiao</strong>, Zhilu Wang, Wanxin Jin, Zhuoran Yang, Zhaoran Wang, Chao Huang, Qi Zhu</p>
-        <p class="pub-meta"><span>ICML 2023</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a></p>
-        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+        <p class="pub-meta"><em>ICML 2023</em> · <a href="https://arxiv.org/pdf/2209.15090.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
+      <article class="pub">
+        <h3>Safety-driven Interactive Planning for Neural Network-based Lane Changing.</h3>
+        <p class="pub-authors">Xiangguo Liu, <strong>Ruochen Jiao</strong>, Bowen Zheng, Dave Liang, Qi Zhu</p>
+        <p class="pub-meta"><em>ASP-DAC 2023</em> · <a href="https://dl.acm.org/doi/pdf/10.1145/3566097.3567847" target="_blank" rel="noopener">paper</a></p>
       </article>
 
-      <!-- Add older years below in the same pattern -->
+      <div class="year">2022</div>
+      <article class="pub">
+        <h3>TAE: A Semi-supervised Controllable Behavior-aware Trajectory Generator and Predictor.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao</strong>, Xiangguo Liu, Bowen Zheng, Dave Liang, Qi Zhu</p>
+        <p class="pub-meta"><em>IROS 2022</em> · <a href="https://arxiv.org/pdf/2203.01261.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
 
+      <div class="year">2021</div>
+      <article class="pub">
+        <h3>End-to-end Uncertainty-based Mitigation of Adversarial Attacks to Automated Lane Centering.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao*</strong>, Hengyi Liang*, Takami Sato, Junjie Shen, Alfred Chen, Qi Zhu</p>
+        <p class="pub-meta"><em>IV 2021</em> · <a href="https://arxiv.org/pdf/2103.00345.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
+      <article class="pub">
+        <h3>WIP: End-to-end analysis of adversarial attacks to automated lane centering systems.</h3>
+        <p class="pub-authors">Hengyi Liang*, <strong>Ruochen Jiao*</strong>, Takami Sato, Junjie Shen, Alfred Chen, Qi Zhu</p>
+        <p class="pub-meta"><em>AutoSec 2021</em> · <a href="https://par.nsf.gov/servlets/purl/10289738" target="_blank" rel="noopener">paper</a></p>
+      </article>
+      <article class="pub">
+        <h3>Safety-assured design and adaptation of learning-enabled autonomous systems.</h3>
+        <p class="pub-authors">Qi Zhu, Chao Huang, <strong>Ruochen Jiao</strong>, Shuyue Lan, Hengyi Liang, Xiangguo Liu, Yixuan Wang, Zhilu Wang, Shichao Xu</p>
+        <p class="pub-meta"><em>ASP-DAC 2021</em> · <a href="https://ieeexplore.ieee.org/document/9371602" target="_blank" rel="noopener">paper</a></p>
+      </article>
+
+      <div class="year">2020</div>
+      <article class="pub">
+        <h3>Leveraging weakly-hard constraints for improving system fault tolerance with functional and timing guarantees.</h3>
+        <p class="pub-authors">Hengyi Liang, Zhilu Wang, <strong>Ruochen Jiao</strong>, Qi Zhu</p>
+        <p class="pub-meta"><em>ICCAD 2020</em> · <a href="https://arxiv.org/pdf/2008.06192.pdf" target="_blank" rel="noopener">paper</a></p>
+      </article>
     </section>
 
-    <div class="footer">© <span id="year"></span> Ruochen Jiao</div>
+    <div class="footer">© <span id="yearP"></span> Ruochen Jiao</div>
   </div>
+
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('yearP').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
-
-
-
