@@ -1,0 +1,162 @@
+<!-- =========================
+     File 1: publications.html
+     ========================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Publications | Ruochen Jiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Publications of Ruochen Jiao">
+  <style>
+    /* Minimal shared styling (matches your index.html look) */
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --border-subtle: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --radius-lg: 1.25rem;
+      --maxw: 980px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+        -system-ui, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #e5f0ff 0, transparent 50%), var(--bg);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .top h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      letter-spacing: -0.2px;
+    }
+    .top .nav {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem 1.9rem;
+      box-shadow: var(--shadow-soft);
+    }
+    .card h2 {
+      margin: 0 0 0.9rem;
+      font-size: 1.15rem;
+    }
+
+    /* Publication items (reuse your homepage pub styles) */
+    .pub { padding: 0.75rem 0; border-top: 1px solid var(--border-subtle); }
+    .pub:first-of-type { border-top: none; padding-top: 0; }
+    .pub h3 { margin: 0.3rem 0 0.3rem; font-size: 1rem; }
+    .pub-authors { margin: 0.1rem 0; font-size: 0.9rem; color: var(--text-muted); }
+    .pub-meta { margin: 0.15rem 0 0.35rem; font-size: 0.85rem; color: var(--text-muted); }
+    .pub-desc { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+
+    .section-note { margin: 0 0 1rem; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+    /* Optional year grouping */
+    .year {
+      margin: 1.6rem 0 0.6rem;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h1>Publications</h1>
+      <div class="nav">
+        <a href="index.html">← Home</a>
+        <a href="activities.html">News & Activities →</a>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Full publication list</h2>
+      <p class="section-note">
+        Below is my full publication list (reverse chronological). Replace the placeholder links with your paper/code/project pages.
+      </p>
+
+      <div class="year">2025</div>
+      <article class="pub">
+        <h3>Can We Trust Embodied Agents? Exploring Backdoor Attacks against Embodied LLM-based Decision-Making Systems.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao*</strong>, Shaoyuan Xie*, Justin Yue, Takami Sato, Lixu Wang, Yixuan Wang, Qi Alfred Chen, Qi Zhu</p>
+        <p class="pub-meta"><span>ICLR 2025</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a> · <a href="#" onclick="return false;">code</a></p>
+        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+      </article>
+
+      <div class="year">2024</div>
+      <article class="pub">
+        <h3>Kinematics-aware Trajectory Generation and Prediction with Latent Stochastic Differential Modeling.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao*</strong>, Yixuan Wang*, Xiangguo Liu, Simon Zhan, Chao Huang, Qi Zhu</p>
+        <p class="pub-meta"><span>IROS 2024</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a></p>
+        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+      </article>
+      <article class="pub">
+        <h3>Empowering Autonomous Driving with Large Language Models: A Safety Perspective.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao</strong>, …</p>
+        <p class="pub-meta"><span>LLMAgents @ ICLR 2024</span> · <a href="#" onclick="return false;">paper</a></p>
+        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+      </article>
+
+      <div class="year">2023</div>
+      <article class="pub">
+        <h3>Semi-supervised Semantics-guided Adversarial Training for Robust Trajectory Prediction.</h3>
+        <p class="pub-authors"><strong>Ruochen Jiao</strong>, Xiangguo Liu, Takami Sato, Alfred Chen, Qi Zhu</p>
+        <p class="pub-meta"><span>ICCV 2023</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a></p>
+        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+      </article>
+      <article class="pub">
+        <h3>Enforcing Hard Constraints with Soft Barriers: Safety-driven Reinforcement Learning in Unknown Stochastic Environments.</h3>
+        <p class="pub-authors">Yixuan Wang, Sinong Simon Zhan, <strong>Ruochen Jiao</strong>, Zhilu Wang, Wanxin Jin, Zhuoran Yang, Zhaoran Wang, Chao Huang, Qi Zhu</p>
+        <p class="pub-meta"><span>ICML 2023</span> · <a href="https://arxiv.org/abs/" target="_blank" rel="noopener">paper</a></p>
+        <p class="pub-desc">(Optional) One-sentence takeaway.</p>
+      </article>
+
+      <!-- Add older years below in the same pattern -->
+
+    </section>
+
+    <div class="footer">© <span id="year"></span> Ruochen Jiao</div>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+
+
