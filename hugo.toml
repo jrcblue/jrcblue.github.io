@@ -1,0 +1,33 @@
+baseURL = "https://jrcblue.github.io/"
+languageCode = "en-us"
+title = "Ruochen Jiao"
+theme = "jrc-blog"
+
+[params]
+  author = "Ruochen Jiao"
+  description = "Applied Scientist at Amazon. Research on LLMs, RL, and trustworthy AI."
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['$$', '$$']]
+          inline = [['$', '$']]
+  [markup.highlight]
+    style = "github"
+    lineNos = false
+    codeFences = true
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 2

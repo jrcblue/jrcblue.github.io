@@ -1,0 +1,34 @@
+{{ define "main" }}
+<div class="blog-page">
+  <header class="blog-header">
+    <div class="blog-header-inner">
+      <a href="/" class="back-home">← Home</a>
+      <h1>Blog</h1>
+      <p class="blog-subtitle">Notes on LLMs, reinforcement learning, and trustworthy AI.</p>
+    </div>
+  </header>
+
+  <main class="blog-list">
+    {{ range .Pages.ByDate.Reverse }}
+    <article class="blog-card">
+      <a href="{{ .Permalink }}">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+        <h2>{{ .Title }}</h2>
+        {{ with .Params.description }}
+        <p class="excerpt">{{ . }}</p>
+        {{ end }}
+        {{ with .Params.tags }}
+        <div class="tags">
+          {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+        </div>
+        {{ end }}
+      </a>
+    </article>
+    {{ end }}
+  </main>
+
+  <footer class="blog-footer">
+    <p>© <span id="year"></span> Ruochen Jiao</p>
+  </footer>
+</div>
+{{ end }}

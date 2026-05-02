@@ -1,0 +1,6 @@
+name = "jrc-blog"
+license = "MIT"
+description = "Minimal blog theme matching jrcblue.github.io design"
+
+[author]
+  name = "Ruochen Jiao"

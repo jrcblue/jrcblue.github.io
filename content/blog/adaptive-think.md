@@ -10,7 +10,7 @@ draft: false
 
 We teach an LLM to **decide for itself** whether to reason step-by-step or answer directly — per query, at inference time — by framing the decision as a single first-token choice (`<think>` vs `</think>`) and training it end-to-end with RL.
 
-**Preliminary results** (training still ongoing, on Qwen3-8B): the self-routed model achieves accuracy comparable to always-thinking, while choosing to think only ~50% of the time → roughly **40% fewer tokens generated** on the training distribution.
+**Preliminary results** (training still ongoing, on an 8B-parameter model): the self-routed model achieves accuracy comparable to always-thinking, while choosing to think only ~50% of the time → roughly **40% fewer tokens generated** on the training distribution.
 
 **Key technical challenges we solved along the way:**
 - **Routing gradient delivery** without modifying the RL framework — via advantage injection at position 0
@@ -53,9 +53,9 @@ The problem is obvious: not every query deserves the same compute budget. Simple
 
 ## 2. Key Insight: Routing as First-Token Choice
 
-Qwen3 (and similar models) already have native special tokens:
-- `<think>` (token id 151667): begins a reasoning block
-- `</think>` (token id 151668): ends a reasoning block
+Modern reasoning models already have native special tokens for thinking:
+- `<think>`: begins a reasoning block
+- `</think>`: ends a reasoning block
 
 The generation format is:
 
@@ -158,7 +158,7 @@ The `tanh` bounding ensures no single noisy sample can inject extreme gradients.
 
 ### 4.2 The Asymmetric No-Think Bias
 
-A naive utility gap (R_TH - R_NT) is **symmetric**: when both modes produce the same reward, gap ≈ 0 and the router gets no signal. This causes the model to default to its pre-training prior — and Qwen3 strongly prefers `<think>`.
+A naive utility gap (R_TH - R_NT) is **symmetric**: when both modes produce the same reward, gap ≈ 0 and the router gets no signal. This causes the model to default to its pre-training prior — which typically strongly prefers `<think>`.
 
 The **nothink_bias** breaks this symmetry:
 
@@ -288,9 +288,9 @@ reward = content_score    (0 or 1)
 No format score. No length penalty. This is a deliberate design choice born from failed experiments (see §4.3).
 
 ### Content Score (per data source)
-- **Math (DAPO-Math-17k)**: `math_verify` — symbolic equivalence checking
-- **Instruction Following (AutoIF)**: Code execution verification
-- **AIME**: Exact integer match
+- **Math**: `math_verify` — symbolic equivalence checking
+- **Instruction Following**: Code execution verification
+- **Competition Math**: Exact integer match
 - **Fallback**: ROUGE-L similarity
 
 The think block (`<think>...</think>`) is stripped before evaluation — only the final answer after `</think>` is scored.
@@ -320,8 +320,8 @@ Without an explicit length penalty, compute savings still emerge naturally:
 ### 4.7 Mixed Data: Why Diversity Matters
 
 Training uses heterogeneous data sources:
-- **Math** (~70%): DAPO-Math-17k — problems that genuinely benefit from reasoning
-- **Instruction Following** (~30%): AutoIF — formatting tasks where thinking is unnecessary
+- **Math** (~70%): problems that genuinely benefit from reasoning
+- **Instruction Following** (~30%): formatting tasks where thinking is unnecessary
 
 **Why this matters**: If all training tasks favor thinking, the router collapses to always-think (since there's no negative signal). IF tasks provide the critical "no-think is correct AND faster" examples that teach the router to skip thinking on simple tasks.
 
@@ -331,7 +331,7 @@ The `AdaptiveThinkDataset` handles heterogeneous schemas using the `_MultiDatase
 
 *Note: These are in-training metrics (training reward, not held-out eval). Final benchmark evaluations are still pending. The curves below show the routing behavior is emerging correctly — formal eval numbers will be added once training completes.*
 
-The figure below shows a representative training run on Qwen3-8B with a 1:1 mix of math data (DAPO-Math-17k) and instruction-following data (AutoIF). The key observation: **the self-routed model tracks the always-think accuracy closely, while choosing to think only ~48% of the time**.
+The figure below shows a representative training run on an 8B-parameter model with a 1:1 mix of math and instruction-following data. The key observation: **the self-routed model tracks the always-think accuracy closely, while choosing to think only ~48% of the time**.
 
 ![Reward and Routing Curves](/images/reward_and_routing.png)
 *Figure: (Top) Mean accuracy for paired Think (TH), paired No-Think (NT), and Self-Routed (SR) rollouts over 300 training steps. SR accuracy tracks the Think oracle closely at ~0.47 despite selecting think only half the time. (Bottom) The model's autonomous think fraction drops from 100% → ~48% as training progresses, demonstrating that the router learns to skip thinking on easy problems (IF tasks) while preserving it for hard ones (math).*
@@ -353,7 +353,7 @@ At step 200, a quantitative snapshot:
 
 The self-routed model achieves equivalent (even marginally better) accuracy while generating **41% fewer tokens** on average, by choosing to think on only ~51% of queries. This confirms the core value proposition: near-oracle accuracy at roughly half the inference compute.
 
-### 4.8 Dynamic Sampling (DAPO-Style Filtering)
+### 4.8 Dynamic Sampling (Filtering Dead Prompts)
 
 Not all prompts provide useful gradient signal. A prompt where all K rollouts produce identical rewards (std = 0) generates zero advantage → zero gradient. These "dead" prompts waste compute.
 
@@ -371,7 +371,7 @@ A prompt is truly dead only if: gap ≈ 0 AND both TH std = 0 AND NT std = 0.
 | Method | Routing mechanism | Training signal | Infra changes |
 |--------|------------------|-----------------|---------------|
 | **Ours** | First-token choice | Counterfactual utility gap via RL | None (advantage injection) |
-| QwQ/Qwen3 "enable_thinking" | System prompt | None (user decides) | None |
+| System-prompt think mode | System prompt | None (user decides) | None |
 | DeepSeek-R1 | Always thinks | Standard RL | None |
 | Mixture-of-Depths | Learned skip layers | Auxiliary capacity loss | Architecture change |
 | Speculative decoding | Draft model routing | Acceptance probability | Separate model |
@@ -389,7 +389,7 @@ The "efficient reasoning" literature is booming, but existing work clusters into
 
 **Camp 1: Continuous budget control** — These papers ask "how many tokens should the model spend?" and control reasoning *length* rather than making a discrete mode decision. [Curriculum-Aware Budget Scheduling](https://arxiv.org/abs/2604.19780) assigns per-query token budgets; [Leash](https://arxiv.org/abs/2512.21540) uses adaptive length penalties; [S1 budget forcing](https://arxiv.org/abs/2501.19393) inserts `<wait>` tokens; [The Art of Efficient Reasoning](https://arxiv.org/abs/2602.20945) surveys the space. These approaches operate on a **continuous** axis (token count) and typically require length penalties or truncation mechanisms.
 
-**Camp 2: Analysis papers** — [To Think or Not To Think](https://arxiv.org/abs/2602.10625) empirically studies when thinking helps/hurts but proposes no training method. [Trade-offs in Large Reasoning Models](https://arxiv.org/abs/2503.17979) analyzes deliberative vs. adaptive reasoning but doesn't train a router. Qwen3's technical report describes SFT-based think/no-think via data mixing, but the routing is controlled by user system prompts at inference time — the model never learns *when* to think.
+**Camp 2: Analysis papers** — [To Think or Not To Think](https://arxiv.org/abs/2602.10625) empirically studies when thinking helps/hurts but proposes no training method. [Trade-offs in Large Reasoning Models](https://arxiv.org/abs/2503.17979) analyzes deliberative vs. adaptive reasoning but doesn't train a router. Some models offer SFT-based think/no-think via data mixing, but the routing is controlled by user system prompts at inference time — the model never learns *when* to think.
 
 **What's missing (our contribution)**: A method that (a) treats the think/no-think decision as a **discrete, learned routing action** within the model itself, (b) trains it **end-to-end via RL** using counterfactual evidence of when thinking actually helps, and (c) requires **zero infrastructure changes** — no architecture modifications, no separate classifier, no length penalties. The question "whether to think" is more fundamental than "how long to think" — it's the coarsest-grained but highest-impact compute allocation decision.
 
@@ -405,7 +405,7 @@ The "efficient reasoning" literature is booming, but existing work clusters into
 
 4. **Interaction with tool use**: When the model has access to tools (code execution, search), the compute tradeoff shifts: thinking may be replaceable by tool calls. [DOVA](https://arxiv.org/abs/2603.13327) explores multi-agent orchestration where different agents handle different reasoning modalities. Our routing framework could extend to a 3-way decision: think / no-think / use-tool, with the utility gap computed across all three modes.
 
-5. **Scaling laws**: How does the optimal think ratio change with model size? Qwen3's technical report hints that larger models need less explicit CoT for easier tasks. If the no-think mode's direct-answer capability scales faster with parameters than the reasoning mode's accuracy improvement, larger models should route more aggressively toward no-think — making adaptive routing even more compute-efficient at scale.
+5. **Scaling laws**: How does the optimal think ratio change with model size? Recent technical reports hint that larger models need less explicit CoT for easier tasks. If the no-think mode's direct-answer capability scales faster with parameters than the reasoning mode's accuracy improvement, larger models should route more aggressively toward no-think — making adaptive routing even more compute-efficient at scale.
 
 ---
 
