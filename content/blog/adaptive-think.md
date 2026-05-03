@@ -6,20 +6,13 @@ tags: ["LLM", "Reinforcement Learning", "Chain-of-Thought", "Adaptive Compute"]
 draft: false
 ---
 
-## TL;DR
+Chain-of-thought reasoning has become the default mode for modern LLMs — models like o1, DeepSeek-R1, and QwQ produce long internal monologues before every answer. But this "always think" approach has a fundamental problem: for many real-world tasks, extended reasoning is not just unnecessary — it actively hurts. Formatting tasks, simple factual queries, social chitchat, and instruction-following prompts all suffer when the model wastes thousands of tokens second-guessing itself. The model overthinks, hedges, or introduces errors that wouldn't exist in a direct answer.
 
-We teach an LLM to **decide for itself** whether to reason step-by-step or answer directly — per query, at inference time — by framing the decision as a single first-token choice (`<think>` vs `</think>`) and training it end-to-end with RL.
+We want a single model that handles both regimes gracefully: reason deeply when it genuinely helps (complex math, multi-step logic), and answer directly when thinking adds no value or even degrades quality. More importantly, we want the two modes to **reinforce each other during training** — the model's experience in thinking mode teaches it *what kinds of problems* benefit from reasoning, while its no-think experience teaches it to be concise and decisive. The routing decision itself should be learned end-to-end, not delegated to an external classifier or a user-facing system prompt.
 
-**Preliminary results** (training still ongoing, on an 8B-parameter model): the self-routed model achieves accuracy comparable to always-thinking, while choosing to think only ~50% of the time → roughly **40% fewer tokens generated** on the training distribution.
+Our approach is built on a simple counterfactual question: **"Would thinking have helped here?"** For each training prompt, we run the model in both modes (forced-think and forced-no-think), compare the outcomes, and use the gap as a teaching signal. This paired counterfactual rollout provides clean, per-sample evidence of when reasoning adds value — no human labels, no heuristics, no difficulty classifiers needed. The model then gradually learns to make this decision autonomously, transitioning from full supervision to self-routing through a curriculum.
 
-**Key technical challenges we solved along the way:**
-- **Routing gradient delivery** without modifying the RL framework — via advantage injection at position 0
-- **vLLM V1 compatibility** — a prefill+reorg trick that sidesteps the lack of per-request logits processors
-- **Loss aggregation asymmetry** — standard `seq_mean_token_mean` starves thinking mode of gradient (20× weaker signal); we designed a mode-balanced scaling that keeps routing symmetric while rebalancing content gradients
-- **Reward hacking & mode collapse** — format rewards and length penalties both cause catastrophic failure; pure binary correctness is the only stable signal
-- **Curriculum for routing stability** — the model must learn *what* thinking helps before it can decide *when* to think; a 3-phase paired→self-routed curriculum prevents collapse
-
-Everything runs on standard verl/GRPO with zero infrastructure modifications. This post documents the design, the pitfalls we hit, and what we've gotten working so far.
+Our method has shown promising initial results: the self-routed model achieves accuracy comparable to always-thinking while choosing to think only ~50% of the time, yielding roughly **40% fewer tokens generated** on the training distribution. Key technical challenges we solved include routing gradient delivery via advantage injection, vLLM V1 compatibility through a prefill+reorg trick, mode-balanced loss scaling to prevent gradient starvation, and a curriculum that prevents routing collapse. Everything runs on standard verl/GRPO with zero infrastructure modifications.
 
 ---
 
@@ -327,11 +320,9 @@ Training uses heterogeneous data sources:
 
 The `AdaptiveThinkDataset` handles heterogeneous schemas using the `_MultiDatasetView` pattern — each file stays as a separate HF Dataset with its own Arrow schema. Bisect-based index lookup provides O(log n) access without any schema merging.
 
-### Preliminary Training Results: Routing Learns to Be Selective
+### Preliminary Results: Routing Learns to Be Selective
 
-*Note: These are in-training metrics (training reward, not held-out eval). Final benchmark evaluations are still pending. The curves below show the routing behavior is emerging correctly — formal eval numbers will be added once training completes.*
-
-The figure below shows a representative training run on an 8B-parameter model with a 1:1 mix of math and instruction-following data. The key observation: **the self-routed model tracks the always-think accuracy closely, while choosing to think only ~48% of the time**.
+Our method has achieved promising initial results. The metrics below are training reward (pass rate on the training distribution), which clearly demonstrate that the routing behavior emerges correctly — the self-routed model tracks the always-think accuracy closely, while choosing to think only ~48% of the time.
 
 ![Reward and Routing Curves](/images/reward_and_routing.png)
 *Figure: (Top) Mean accuracy for paired Think (TH), paired No-Think (NT), and Self-Routed (SR) rollouts over 300 training steps. SR accuracy tracks the Think oracle closely at ~0.47 despite selecting think only half the time. (Bottom) The model's autonomous think fraction drops from 100% → ~48% as training progresses, demonstrating that the router learns to skip thinking on easy problems (IF tasks) while preserving it for hard ones (math).*

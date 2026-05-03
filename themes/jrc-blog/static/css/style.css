@@ -141,10 +141,78 @@ a:hover { text-decoration: underline; }
 }
 
 /* ─── Single Post Page ─── */
+.post-page-wrapper {
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
 .post-page {
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 3rem 1.5rem 4rem;
+  width: 100%;
+  padding: 3rem 0 4rem;
+}
+
+/* ─── Left Sidebar TOC ─── */
+.toc-sidebar {
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+  width: 220px;
+  min-width: 220px;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  margin-right: 2.5rem;
+  padding-top: 3rem;
+  display: none; /* hidden by default, shown on wide screens */
+}
+
+.toc-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  margin: 0 0 0.6rem 0;
+}
+
+.toc-nav #TableOfContents {
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.toc-nav #TableOfContents ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.toc-nav #TableOfContents ul ul {
+  padding-left: 0.8rem;
+}
+
+.toc-nav #TableOfContents li {
+  margin-bottom: 0.3rem;
+}
+
+.toc-nav #TableOfContents a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.toc-nav #TableOfContents a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Show TOC on wide screens */
+@media (min-width: 1100px) {
+  .toc-sidebar {
+    display: block;
+  }
 }
 
 .post-header {

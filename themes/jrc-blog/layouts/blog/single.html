@@ -1,30 +1,40 @@
 {{ define "main" }}
-<div class="post-page">
-  <header class="post-header">
-    <div class="post-header-inner">
-      <a href="/blog/" class="back-blog">← All Posts</a>
-      <h1>{{ .Title }}</h1>
-      <div class="post-meta">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
-        {{ with .Params.tags }}
-        <span class="meta-sep">·</span>
-        {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
-        {{ end }}
-        <span class="meta-sep">·</span>
-        <span class="reading-time">{{ .ReadingTime }} min read</span>
+<div class="post-page-wrapper">
+  <!-- Left sidebar TOC -->
+  <aside class="toc-sidebar">
+    <nav class="toc-nav">
+      <h4 class="toc-title">Contents</h4>
+      {{ .TableOfContents }}
+    </nav>
+  </aside>
+
+  <div class="post-page">
+    <header class="post-header">
+      <div class="post-header-inner">
+        <a href="/blog/" class="back-blog">← All Posts</a>
+        <h1>{{ .Title }}</h1>
+        <div class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+          {{ with .Params.tags }}
+          <span class="meta-sep">·</span>
+          {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+          {{ end }}
+          <span class="meta-sep">·</span>
+          <span class="reading-time">{{ .ReadingTime }} min read</span>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="post-content">
-    <article>
-      {{ .Content }}
-    </article>
-  </main>
+    <main class="post-content">
+      <article>
+        {{ .Content }}
+      </article>
+    </main>
 
-  <footer class="post-footer">
-    <a href="/blog/" class="back-blog">← Back to all posts</a>
-    <p class="copyright">© <span id="year"></span> Ruochen Jiao</p>
-  </footer>
+    <footer class="post-footer">
+      <a href="/blog/" class="back-blog">← Back to all posts</a>
+      <p class="copyright">© <span id="year"></span> Ruochen Jiao</p>
+    </footer>
+  </div>
 </div>
 {{ end }}
