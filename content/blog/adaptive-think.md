@@ -272,13 +272,11 @@ Step 3: Reorg — move routing token from prompt to response
 
 ### 4.6 Reward Function Design
 
-The reward is **pure binary correctness** — nothing else:
+The reward is **pure binary correctness** — no format score, no length penalty (see §4.3 for why these were removed).
 
 ```
 reward = content_score    (0 or 1)
 ```
-
-No format score. No length penalty. This is a deliberate design choice born from failed experiments (see §4.3).
 
 ### Content Score (per data source)
 - **Math**: `math_verify` — symbolic equivalence checking
@@ -287,28 +285,6 @@ No format score. No length penalty. This is a deliberate design choice born from
 - **Fallback**: ROUGE-L similarity
 
 The think block (`<think>...</think>`) is stripped before evaluation — only the final answer after `</think>` is scored.
-
-### Why No Format Score (Reward Hacking)
-
-Format rewards check structural correctness (`<think>...</think>answer` vs `</think>answer`). But since TH and NT have inherently different structures, the format signal is confounded with the mode — the model can game format compliance without improving answer quality. We observed reward hacking behavior where the model produced structurally valid but content-poor outputs.
-
-### Why No Length Penalty (NT Output Collapse)
-
-Length penalties cause a catastrophic positive feedback loop specifically in the no-think mode. Mechanism:
-1. NT outputs are short (~100 tokens) → small penalty
-2. GRPO computes advantage: shorter NT rollouts get slightly higher reward → positive advantage for shortness
-3. Model learns to generate even shorter NT outputs
-4. Even shorter → even higher reward → repeat
-5. NT mode collapses to generating just a few tokens of garbage
-
-The fundamental issue: length penalty makes "shorter" a reward-hackable axis. Once the no-think mode starts shrinking, it cannot recover because correct-but-longer outputs are always penalized relative to short nonsense. The mode loses the ability to learn useful direct answers.
-
-### How No-Think Efficiency Emerges Without Length Penalty
-
-Without an explicit length penalty, compute savings still emerge naturally:
-- The `nothink_bias` in the routing signal (§4.2) shifts the decision boundary: "only think when it **clearly** helps correctness"
-- NT mode optimizes purely for getting the right answer → learns to be concise because that's what works for direct answering
-- The model discovers that many questions don't need 2000 tokens of reasoning — the savings come from **routing correctly**, not from penalizing length
 
 ### 4.7 Mixed Data: Why Diversity Matters
 
@@ -376,13 +352,26 @@ A prompt is truly dead only if: gap ≈ 0 AND both TH std = 0 AND NT std = 0.
 
 ### Where we sit in the landscape
 
-The "efficient reasoning" literature is booming, but existing work clusters into two camps — neither of which directly addresses **learned binary mode routing**:
+The "efficient reasoning" literature is booming, but existing work clusters into two camps:
 
-**Camp 1: Continuous budget control** — These papers ask "how many tokens should the model spend?" and control reasoning *length* rather than making a discrete mode decision. [Curriculum-Aware Budget Scheduling](https://arxiv.org/abs/2604.19780) assigns per-query token budgets; [Leash](https://arxiv.org/abs/2512.21540) uses adaptive length penalties; [S1 budget forcing](https://arxiv.org/abs/2501.19393) inserts `<wait>` tokens; [The Art of Efficient Reasoning](https://arxiv.org/abs/2602.20945) surveys the space. These approaches operate on a **continuous** axis (token count) and typically require length penalties or truncation mechanisms.
+**Camp 1: Continuous budget control** — These papers ask "how many tokens should the model spend?" and control reasoning *length* rather than making a discrete mode decision. [Curriculum-Aware Budget Scheduling](https://arxiv.org/abs/2604.19780) assigns per-query token budgets; [Leash](https://arxiv.org/abs/2512.21540) uses adaptive length penalties; [S1 budget forcing](https://arxiv.org/abs/2501.19393) inserts `<wait>` tokens; [The Art of Efficient Reasoning](https://arxiv.org/abs/2602.20945) surveys the space. These approaches operate on a **continuous** axis (token count) and are best suited for tasks that all require *some* reasoning but at varying depths (e.g., easy math → hard math). They don't address the more fundamental question of *whether to reason at all* — a critical distinction when the task mix includes both reasoning-heavy tasks and simple tasks (formatting, chitchat) where any thinking degrades quality.
 
-**Camp 2: Analysis papers** — [To Think or Not To Think](https://arxiv.org/abs/2602.10625) empirically studies when thinking helps/hurts but proposes no training method. [Trade-offs in Large Reasoning Models](https://arxiv.org/abs/2503.17979) analyzes deliberative vs. adaptive reasoning but doesn't train a router. Some models offer SFT-based think/no-think via data mixing, but the routing is controlled by user system prompts at inference time — the model never learns *when* to think.
+**Camp 2: Manual or external routing** — Several models support both think and no-think modes, but the routing decision is not learned end-to-end. Qwen3 and DeepSeek-R1 offer mode switching via system prompts — the user manually chooses. [To Think or Not To Think](https://arxiv.org/abs/2602.10625) empirically studies when thinking helps/hurts but proposes no training method. [Trade-offs in Large Reasoning Models](https://arxiv.org/abs/2503.17979) analyzes the tradeoffs without learning a router. The fundamental limitation: the model never learns *when* to think — it relies on an oracle (human or external classifier) at inference time.
 
-**What's missing (our contribution)**: A method that (a) treats the think/no-think decision as a **discrete, learned routing action** within the model itself, (b) trains it **end-to-end via RL** using counterfactual evidence of when thinking actually helps, and (c) requires **zero infrastructure changes** — no architecture modifications, no separate classifier, no length penalties. The question "whether to think" is more fundamental than "how long to think" — it's the coarsest-grained but highest-impact compute allocation decision.
+**Concurrent work: Large Hybrid-Reasoning Models (LHRMs)** — [LHRMs](https://arxiv.org/abs/2505.14631) is the most closely related concurrent work. They also do paired rollouts (forced Think + forced No-Think per query) and separate the training signal into inter-group (routing) and intra-group (content quality) advantages, combined as `A = A_intra + α × A_inter`. Key differences from our approach:
+
+| Dimension | LHRMs (HGPO) | Ours |
+|-----------|:---:|:---:|
+| Routing signal | Binary (which mode's mean reward is higher) | Continuous `tanh(utility_gap)` |
+| Signal delivery | Additive (`A_intra + α × A_inter`) | Overwrite (pos0 purely routing) |
+| Cold start | Requires 1.7M SFT (Hybrid Fine-Tuning) | No SFT needed (curriculum replaces it) |
+| Self-routing practice | None during training (always forced) | Curriculum introduces self-routed batches |
+| Reward source | Reward model (continuous scores) | Binary correctness (0/1) |
+| Routing bounding | GRPO normalization on binary rewards | Explicit `tanh` + adaptive scale |
+
+The core philosophical difference: LHRMs use **additive advantages** where routing and content signals mix at pos0, and their binary `r_inter` loses magnitude information (a gap of 0.01 and 0.9 give the same signal). We use **advantage overwrite** for clean separation and **continuous `tanh(gap)`** to preserve signal magnitude. Our curriculum also lets the model practice autonomous routing during training, rather than only experiencing forced modes.
+
+**Our contribution**: (a) treats the think/no-think decision as a **discrete, learned routing action** within the model itself, (b) trains it **end-to-end via RL** using **continuous counterfactual utility gap** that preserves signal magnitude, (c) uses **advantage overwrite** for clean routing/content gradient separation, (d) introduces a **curriculum** that transitions from supervised paired rollouts to autonomous self-routing, and (e) requires **zero infrastructure changes** — no architecture modifications, no SFT cold start, no separate classifier, no length penalties.
 
 ---
 
